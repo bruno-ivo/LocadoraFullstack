@@ -1,0 +1,55 @@
+<p>filme-page works!</p>
+
+<div id="data-grid-demo">
+  <dx-data-grid
+    id="gridContainer"
+    [dataSource]="filmes"
+    (onRowInserting)="adicionarFilme($event)"
+    (onRowUpdating)="editaFilme($event)"
+    (onRowRemoving)="removerFilme($event)"
+    >
+    <dxo-editing
+      mode="popup"
+      [allowUpdating]="true"
+      [allowAdding]="true"
+      [allowDeleting]="true"
+    >
+      <dxo-popup
+        title="Criar/Editar um Filme"
+        [showTitle]="true"
+        [width]="700"
+        [height]="525"
+      >
+      </dxo-popup>
+      <dxo-form>
+        <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+          <dxi-item dataField="nomeDoFilme" caption="Titulo"></dxi-item>
+          <dxi-item dataField="codigoDoFilme" caption="Código"></dxi-item>
+          <dxi-item dataField="tipo" caption="Tipo de Midia"></dxi-item>
+          <dxi-item dataField="valorUnitarioDoFilme" caption="Valor do Filme" ></dxi-item>
+        </dxi-item>
+      </dxo-form>
+    </dxo-editing>
+
+    <dxi-column dataField="id" caption="ID"></dxi-column>
+    <dxi-column dataField="nomeDoFilme" caption="Titulo"></dxi-column>
+    <dxi-column dataField="codigoDoFilme" caption="Código"></dxi-column>
+    <dxi-column dataField="tipo" caption="Tipo de Midia"></dxi-column>
+    <dxi-column dataField="valorUnitarioDoFilme" caption="Valor do Filme" [format]="{ style: 'currency', currency: 'BRL', useGrouping: true, minimumSignificantDigits: 3 }"></dxi-column>
+
+<!--     <div *dxTemplate="let data of 'tipoEditCellTemplate'">
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <dx-select-box
+            [items]="tiposMidia"
+            [value]="getTipoValue(data.value)"
+            (onValueChanged)="setTipoValue($event)"
+          ></dx-select-box>
+        </div>
+      </div>
+
+    </div> -->
+
+
+  </dx-data-grid>
+</div>

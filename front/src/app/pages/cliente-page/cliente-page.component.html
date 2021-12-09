@@ -1,0 +1,37 @@
+<div id="data-grid-demo">
+  <dx-data-grid
+    id="gridContainer"
+    [dataSource]="clientes"
+    (onSaving)="onSaving($event)"
+    [showBorders]="true"
+  >
+    <dxo-paging [enabled]="false"></dxo-paging>
+    <dxo-editing
+      mode="popup"
+      [allowUpdating]="true"
+      [allowAdding]="true"
+      [allowDeleting]="true"
+    >
+      <dxo-popup
+        title="Criar/Editar um cliente"
+        [showTitle]="true"
+        [width]="700"
+        [height]="525"
+      >
+      </dxo-popup>
+      <dxo-form>
+        <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+          <dxi-item dataField="nome"></dxi-item>
+          <dxi-item dataField="codigoDoCliente"></dxi-item>
+        </dxi-item>
+      </dxo-form>
+    </dxo-editing>
+
+    <dxi-column dataField="id" caption="ID"></dxi-column>
+    <dxi-column dataField="nome" caption="Seu Nome"></dxi-column>
+    <dxi-column dataField="codigoDoCliente" caption="Código"></dxi-column>
+
+  </dx-data-grid>
+
+</div>
+
