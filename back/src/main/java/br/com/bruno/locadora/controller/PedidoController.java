@@ -53,20 +53,18 @@ public class PedidoController {
         return ResponseEntity.created(uri).body(pedido);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     @Transactional
-    public ResponseEntity <Pedido> atualizarPedido(@PathVariable Long id ,@RequestBody Pedido pedido){
+    public ResponseEntity <Pedido> atualizarPedido(@RequestBody Pedido pedido){
         pedido.setValorTotal(BigDecimal.ZERO);
-        Optional <Pedido> p = pedidoRepository.findById(id);
-        if (p.isPresent()){
-            for (ItemPedido item : pedido.getItensDoPedido()) {
-                item.setPedido(pedido);
-                item.setValorTotal(item.getFilme().getValorUnitarioDoFilme().multiply(new BigDecimal(item.getQuantidade())));
-                pedido.setValorTotal(pedido.getValorTotal().add(item.getValorTotal()));
-            }
-            return ResponseEntity.ok(pedido);
+        for (ItemPedido item : pedido.getItensDoPedido()) {
+            item.setPedido(pedido);
+            item.setValorTotal(item.getFilme().getValorUnitarioDoFilme().multiply(new BigDecimal(item.getQuantidade())));
+            pedido.setValorTotal(pedido.getValorTotal().add(item.getValorTotal()));
         }
-        return  ResponseEntity.notFound().build();
+        pedidoRepository.save(pedido);
+
+        return ResponseEntity.ok(pedido);
     }
 
     @DeleteMapping("/{id}")

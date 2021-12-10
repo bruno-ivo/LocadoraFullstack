@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/front-Locadora/front-Locadora.iml" filepath="$PROJECT_DIR$/front-Locadora/front-Locadora.iml" />
-      <module fileurl="file://$PROJECT_DIR$/locadora/locadora.iml" filepath="$PROJECT_DIR$/locadora/locadora.iml" />
+      <module fileurl="file://$PROJECT_DIR$/front/front.iml" filepath="$PROJECT_DIR$/front/front.iml" />
+      <module fileurl="file://$PROJECT_DIR$/back/locadora.iml" filepath="$PROJECT_DIR$/back/locadora.iml" />
     </modules>
   </component>
 </project>

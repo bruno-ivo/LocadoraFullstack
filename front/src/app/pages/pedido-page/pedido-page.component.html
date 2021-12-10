@@ -5,6 +5,7 @@
     id="gridContainer"
     [dataSource]="pedidos"
     [showBorders]="true"
+    [twoWayBindingEnabled]="true"
     (onInitNewRow)="onInitNewRowItemPedido($event)"
     (onSaving)="onSavingPedido($event)"
   >
@@ -44,21 +45,22 @@
     <div *dxTemplate="let data of 'clientesCellTemplate'">{{ data.value ? data.value.nome : 'não achou o cliente' }}</div>
 
     <div *dxTemplate="let data of 'clientesEditCellTemplate'">
-      {{data|firstKeys}}
-      <dx-select-box
-        [items]="clientes"
-        [value]="data.value"
-        [displayExpr]="getDisplayCliente"
+      <dx-select-box [items]="clientes"
+                     valueExpr="id"
+                     [value]="data.value ? data.value.id : 0"
+                     (valueChange)="valueChangeCliente($event, data)"
+                     [displayExpr]="getDisplayCliente"
       ></dx-select-box>
     </div>
 
     <div *dxTemplate="let data of 'itensEditCellTemplate'">
       <dx-data-grid
         [dataSource]="data.value"
-        (onSaving)="adicionarLinhaNoGrid($event)"
+        (onSaving)="onSavingGridItens($event, data)"
       >
         <dxo-editing
           mode="row"
+          select
           [allowUpdating]="true"
           [allowAdding]="true"
           [allowDeleting]="true"
@@ -73,12 +75,11 @@
         <div *dxTemplate="let data of 'filmeCellTemplate'">{{data.value ? data.value.nomeDoFilme : 'sem filme'}}</div>
 
         <div *dxTemplate="let data of 'filmesCellTemplate'">
-          {{data|firstKeys}}
-
           <dx-select-box
             [items]="filmes"
-            [(value)]="data.value.id"
             valueExpr="id"
+            [value]="data.value ? data.value.id : 0"
+            (valueChange)="valueChangeFilme($event, data)"
             [displayExpr]="getDisplayFilme"
           ></dx-select-box>
         </div>

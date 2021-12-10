@@ -92,25 +92,23 @@ export class PedidoPageComponent implements OnInit {
     return filme;
   }
 
-  adicionarLinhaNoGrid(e: any){
-    let item = e.changes[0];
-    if(item && item.type=='insert'){
-      item.data.valorTotal = item.data.quantidade*item.data.filme.valorUnitarioDoFilme;
+  onSavingGridItens(event: any, data: any){
+    for (let change of event.changes) {
+      if (change.type == 'insert') {
+        change.data.valorTotal = change.data.quantidade*change.data.filme.valorUnitarioDoFilme;
+        // this.pedidos.push(pedidoNovo);
+        // this.pedidos = applyChanges(this.pedidos, [pedidoNovo], {keyExpr: 'id'});
+      } else if (change.type == 'update') {
+        change.data = Object.assign(change.key, change.data);
+        change.data.valorTotal = change.data.quantidade*change.key.filme.valorUnitarioDoFilme;
+        data.value = applyChanges(data.value, [change.data], {keyExpr: 'id'});
+      }
     }
-    else if(item && item.type=='update' && item.data.quantidade){
-      item.data.valorTotal = item.data.quantidade*item.key.filme.valorUnitarioDoFilme;
-    }
+    data.setValue(data.value)
   }
 
   valueChangeFilme(event: any, data: any){
-    data.data.filme = event;
-    event = new Filme();
-    console.log(event);
-  }
-
-  valueChangeCliente(event: any, data:any){
-    data.data.cliente = this.clientes.find(x => x.id==event);
-
+    data.setValue(this.filmes.find(x => x.id==event));
   }
 
   onInitNewRowItemPedido(event: any){
@@ -119,7 +117,12 @@ export class PedidoPageComponent implements OnInit {
     }
   }
 
+  valueChangeCliente(event: any, data: any) {
+    data.setValue(this.clientes.find(x => x.id==event));
+  }
 }
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -138,36 +141,3 @@ export class PedidoPageComponent implements OnInit {
 })
 export class PedidoPageComponentModule {}
 
-/*     let itensDoPedido = new ItemPedido();
-
-itensDoPedido.pedido = e.data.pedido;
-itensDoPedido.quantidade =  e.data.quantidade;
-itensDoPedido.filme.nomeDoFilme =  e.data.filme.nomeDoFilme;
-itensDoPedido.filme.tipo =  e.data.filme.tipo;
-itensDoPedido.filme.codigo =  e.data.filme.codigo;
-itensDoPedido.filme.valorUnitarioDoFilme =  e.data.filme.valorUnitarioDoFilme;
-itensDoPedido.valorTotal =  e.data.filme.valorUnitarioDoFilme * e.data.quantidade;
-
-e.push(this.itensPedido); */
-
-
-
-
-/*     data.data.itemPedido = e;
-let item = new ItemPedido();
-item.id = e
-item.filme = e;
-item.pedido = e;
-item.quantidade = e;
-item.valorTotal = e;
-
-console.log(item);
-
-
-this.itensPedido.push(item);
-*/
-//item.quantidade =  e.data.quantidade;
-//item.id = e.change.id;
-//item.valorTotal = item.filme.valorUnitarioDoFilme * e.change.data.quantidade;
-// data.data.valorUnitarioDoFilme = item.filme.valorUnitarioDoFilme;
-//console.log(e);
